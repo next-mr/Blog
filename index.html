@@ -293,7 +293,22 @@
         </main>
     </div>
 </div>
-<script src="./js/main.js"></script>
+<script id="create-link-title" type="text/x-handlebars-template">
+    <li><a class="a-href" href="#{{ postTitle }}"><span class="articles" id="span-article-{{ spanI }}">{{ postTitle }}</span></a></li>
+</script>
+<script id="create-tags-bottom" type="text/x-handlebars-template">
+    <li><a class="b-href" href="#{{ dataTagsBottom }}"><span class="tags-articles">{{ dataTagsBottom  }}</span></a></li>
+</script>
+<script id="create-top-link-authors" type="text/x-handlebars-template">
+    <a class="e-href" href="#{{ dataAuthorTop }}"><span>{{ dataAuthorTop }}</span></a>
+</script>
+<script id="create-right-list-tags" type="text/x-handlebars-template">
+    <li><a class="c-href" href="#{{ dataObjectTags }}"><span class="tags-all {{ dataWhatTagSize }}">{{ dataObjectTags }} ({{ dataObjectTagsValue }})</span></a></li>
+</script><script id="create-right-list-author" type="text/x-handlebars-template">
+    <li><a class="d-href" href="#{{ dataObjectAuthor }}"><span class="author-article">{{ dataObjectAuthor }}. ({{ dataObjectAuthorValue }})</span></a></li>
+</script>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/handlebars.js/4.1.0/handlebars.min.js"></script>
+<script src="./js/main2.js"></script>
 </body>
 
 </html>
