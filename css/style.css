@@ -1,0 +1,176 @@
+@import url("https://fonts.googleapis.com/css?family=Oswald:400,600|Sacramento|Source+Sans+Pro:300&subset=latin-ext");
+/* Variables */
+/* Global */
+*,
+*::before,
+*::after {
+  box-sizing: border-box;
+}
+
+body {
+  background: #fff;
+  font-family: "Source Sans Pro", sans-serif;
+  color: #444;
+  font-weight: 300;
+  line-height: 2.0;
+  font-size: 16px;
+}
+
+.container {
+  max-width: 1140px;
+  margin: 0 auto;
+}
+
+.section-title {
+  font-size: 22px;
+  text-transform: uppercase;
+  font-family: "Oswald", sans-serif;
+  font-weight: 600;
+  cursor: pointer;
+}
+
+.section-title span {
+  text-transform: none;
+  font-weight: 400;
+  color: #777777;
+}
+
+/* Layout */
+.wrapper {
+  display: -ms-flexbox;
+  display: flex;
+  -ms-flex-wrap: wrap;
+      flex-wrap: wrap;
+  margin-left: 10px;
+}
+
+.sidebar {
+  -ms-flex: 1 0 0 px;
+      flex: 1 0 0;
+}
+
+.posts {
+  -ms-flex: 2 0 0 px;
+      flex: 2 0 0;
+}
+
+.sidebar,
+.posts {
+  background: #fff;
+  margin-right: 15px;
+  margin-bottom: 20px;
+  padding: 40px;
+  border: 2px solid #444;
+  border-radius: 5px;
+  box-shadow: 2px 3px 5px #444;
+}
+
+.sidebar ul li a,
+.posts ul li a {
+  color: #444;
+}
+
+.sidebar h3,
+.posts h3 {
+  font-size: 22px;
+  text-transform: uppercase;
+  font-family: "Oswald", sans-serif;
+  font-weight: 600;
+}
+
+/* Logo */
+.logo {
+  font-family: "Sacramento", cursive;
+  font-weight: 400;
+  font-size: 104px;
+  line-height: 1;
+  text-align: center;
+}
+
+/* Lists */
+.list {
+  list-style-type: none;
+  margin: 0;
+  padding: 0;
+}
+
+.list .active {
+  font-weight: bold;
+}
+
+.list-horizontal li {
+  display: inline-block;
+  padding-right: 5px;
+}
+
+/* Authors */
+.authors li {
+  margin-bottom: 12px;
+}
+
+/* Post */
+.post {
+  min-width: 200px;
+  font-family: "Source Sans Pro", sans-serif;
+  display: none;
+}
+
+.post.active {
+  display: block;
+}
+
+.post-author {
+  font-style: italic;
+}
+
+.post-author a {
+  text-decoration: none;
+}
+
+.post-tags {
+  display: -ms-flexbox;
+  display: flex;
+}
+
+.post-tags p {
+  margin: 0 10px 0 0;
+}
+
+.hide {
+  display: none;
+}
+
+.size-tag-1 {
+  font-size: 14px;
+  color: blue;
+  font-weight: bold;
+}
+
+.size-tag-2 {
+  font-size: 20px;
+  color: aqua;
+  font-weight: bold;
+}
+
+.size-tag-3 {
+  font-size: 25px;
+  color: chartreuse;
+  font-weight: bold;
+}
+
+.size-tag-4 {
+  font-size: 30px;
+  font-weight: bold;
+  color: chocolate;
+}
+
+.list-tags a, .list-authors a, .list a {
+  text-decoration: none;
+}
+
+@media (max-width: 576px) {
+  .sidebar {
+    text-align: center;
+  }
+}
+/*# sourceMappingURL=style.css.map */
