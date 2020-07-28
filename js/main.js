@@ -2,26 +2,22 @@
 
 //FUNCTIONS -> CREATE
 function createLinkTitle() {
-  let html = '', i = 1;
+  let i = 1;
   for (const elementPostTitleSelector of postTitleSelector) {
-    const linkHTML = '<li><a class="a-href" href="#' + elementPostTitleSelector.innerHTML + '"><span class="articles" id="span-article-' + i + '">' + elementPostTitleSelector.innerHTML + '</span></a></li>';
+    const dataLinkTitle = templateLink({postTitle: elementPostTitleSelector.innerHTML, spanI: i});
     i++;
-    html = html + linkHTML;
+    document.querySelector('.links-articles').innerHTML += dataLinkTitle;
   }
-  listSelector.innerHTML = html;
-  listSelector.querySelector('li a span').classList.add('active');
+  listSelector.querySelector('.articles').classList.add('active');
 }
 
 function createTagsBottom() {
-  let html = '';
   for (const elementPostSelector of postSelector) {
     let dataTags = elementPostSelector.getAttribute('data-tags').split(' ');
     for (const elementDataTags of dataTags) {
-      const linkHTML = '<li><a class="b-href" href="#' + elementDataTags + '"><span class="tags-articles">' + elementDataTags + '</span></a></li>';
-      html = html + linkHTML;
+      const dataTagsBottom = templateTagsBottom({dataTagsBottom: elementDataTags});
+      elementPostSelector.querySelector('.list-horizontal').innerHTML += dataTagsBottom;
     }
-    elementPostSelector.querySelector('.list-horizontal').innerHTML = html;
-    html = '';
   }
 }
 
@@ -41,7 +37,7 @@ function createRightListTags() {
     }
   }
 
-  let html = '', whatTagSize = '';
+  let whatTagSize = '';
   for (const elementObjectTag in objectTags) {
     let calculatePercentage = Math.floor((objectTags[elementObjectTag] * 100) / maxQtyTag);
     if (calculatePercentage < 25) {
@@ -53,10 +49,13 @@ function createRightListTags() {
     } else if (calculatePercentage > 75) {
       whatTagSize = 'size-tag-4';
     }
-    const linkHTML = '<li><a class="c-href" href="#' + elementObjectTag + '"><span class="tags-all ' + whatTagSize + '">' + elementObjectTag + ' (' + objectTags[elementObjectTag] + ')</span></a></li>';
-    html = html + linkHTML;
+    const dataRightListTags = templateRightListTags({
+      dataObjectTags: elementObjectTag,
+      dataWhatTagSize: whatTagSize,
+      dataObjectTagsValue: objectTags[elementObjectTag]
+    });
+    document.querySelector('.list-tags').innerHTML += dataRightListTags;
   }
-  document.querySelector('.list-tags').innerHTML = html;
 }
 
 function createRightListAuthor() {
@@ -72,18 +71,19 @@ function createRightListAuthor() {
     ++objectAuthors[arrAllAuthors[i]];
   }
 
-  let html = '';
   for (const elementObjectAuthor in objectAuthors) {
-    const linkHTML = '<li><a class="d-href" href="#' + elementObjectAuthor + '"><span class="author-article">' +elementObjectAuthor + '. (' + objectAuthors[elementObjectAuthor] + ')</span></a></li>';
-    html = html + linkHTML;
+    const dataRightListAuthor = templateRightListAuthor({
+      dataObjectAuthor: elementObjectAuthor,
+      dataObjectAuthorValue: objectAuthors[elementObjectAuthor]
+    });
+    document.querySelector('.list-authors').innerHTML += dataRightListAuthor;
   }
-  document.querySelector('.list-authors').innerHTML = html;
 }
 
 function createTopLinkAuthors() {
   for (const elementPostSelector of postSelector) {
-    let dataAuthor = elementPostSelector.getAttribute('data-author');
-    elementPostSelector.querySelector('.post-author').innerHTML = '<a class="e-href" href="#' + dataAuthor + '"><span>' + dataAuthor + '</span></a>';
+    const dataAuthorTop = templateAuthorTop({dataAuthorTop: elementPostSelector.getAttribute('data-author')});
+    elementPostSelector.querySelector('.post-author').innerHTML += dataAuthorTop;
   }
 }
 
@@ -128,43 +128,37 @@ function addActiveFirstTitleAndPost() {
 
 //FUNCTIONS -> CLICK
 function checkWhatWasClicked(e) {
-  //click title
   if (e.target.closest('a').classList.contains('a-href')) {
     removeActiveLinkTitle();
     e.target.classList.add('active');
     removeActivePost();
     for (const elementPostSelector of postSelector) {
-      if (elementPostSelector.getAttribute('id') == e.target.getAttribute('id').substring(5, e.target.getAttribute('id').length)) {
+      let getAttributeID = elementPostSelector.getAttribute('id');
+      let getAttributeIdWithoutSpan = e.target.getAttribute('id').substring(5, e.target.getAttribute('id').length);
+      if (getAttributeID == getAttributeIdWithoutSpan ) {
         elementPostSelector.classList.add('active');
         break;
       }
     }
   }
-  //click tags bottom and tags right
-  if (e.target.closest('a').classList.contains('b-href') || e.target.closest('a').classList.contains('c-href')) {
-    removeHideLinksTitle();
-    let firstWord = e.target.innerHTML.split(' ');
-    for (const elementPostSelector of postSelector) {
-      if (elementPostSelector.getAttribute('data-tags').search(firstWord[0]) == -1) {
-        for (const elementlistSelectorSpan2 of listSelectorSpan2) {
-          if (elementlistSelectorSpan2.getAttribute('id') == 'span-' + elementPostSelector.getAttribute('id')) {
-            elementlistSelectorSpan2.classList.toggle('hide', true);
-            break;
-          }
-        }
-      }
+  else {
+    let dataTagsOrAuthor = '';
+    let firstWord = [];
+    if (e.target.closest('a').classList.contains('b-href') || e.target.closest('a').classList.contains('c-href')) {
+      dataTagsOrAuthor = 'data-tags';
+      firstWord = e.target.innerHTML.split(' ');
     }
-    addActiveFirstTitleAndPost();
-  }
-  //click author top and authors right
-  if (e.target.closest('a').classList.contains('e-href') || e.target.closest('a').classList.contains('d-href')) {
+    if (e.target.closest('a').classList.contains('e-href') || e.target.closest('a').classList.contains('d-href')) {
+      dataTagsOrAuthor = 'data-author';
+      firstWord= e.target.innerHTML.split('.');
+    }
     removeHideLinksTitle();
-    let firstWord = e.target.innerHTML.split('.');
     for (const elementPostSelector of postSelector) {
-      if (elementPostSelector.getAttribute('data-author').search(firstWord[0].trim()) == -1) {
-        for (const elementlistSelectorSpan2 of listSelectorSpan2) {
-          if (elementlistSelectorSpan2.getAttribute('id') == 'span-' + elementPostSelector.getAttribute('id')) {
-            elementlistSelectorSpan2.classList.toggle('hide', true);
+      let getAttributeID = elementPostSelector.getAttribute(dataTagsOrAuthor);
+      if  ( getAttributeID.search(firstWord[0].trim()) == -1) {
+        for (const elementlistSelectorSpan of listSelectorSpan) {
+          if (elementlistSelectorSpan.getAttribute('id') == 'span-' + elementPostSelector.getAttribute('id')) {
+            elementlistSelectorSpan.classList.toggle('hide', true);
             break;
           }
         }
@@ -175,6 +169,12 @@ function checkWhatWasClicked(e) {
 }
 
 //START
+const templateLink = Handlebars.compile(document.querySelector('#create-link-title').innerHTML),
+  templateTagsBottom = Handlebars.compile(document.querySelector('#create-tags-bottom').innerHTML),
+  templateAuthorTop = Handlebars.compile(document.querySelector('#create-top-link-authors').innerHTML),
+  templateRightListTags = Handlebars.compile(document.querySelector('#create-right-list-tags').innerHTML),
+  templateRightListAuthor = Handlebars.compile(document.querySelector('#create-right-list-author').innerHTML);
+
 const listSelector = document.querySelector('.list'),
   postSelector = document.querySelectorAll('.post'),
   postTitleSelector = document.querySelectorAll('.post-title');//posty dla artykulow
@@ -182,12 +182,12 @@ const listSelector = document.querySelector('.list'),
 createLinkTitle();
 createTagsBottom();
 
-const listSelectorSpan = document.querySelectorAll('.articles'),
-  listSelectorSpan2 = document.querySelectorAll('.articles');//tymczasowe ROZWIĄZANIE PROBLEMU- szukam bledu
+const listSelectorSpan = document.querySelectorAll('.articles');
 
 createRightListTags();
 createTopLinkAuthors();
 createRightListAuthor();
+
 
 let clickBlog = document.querySelector('.blog');
 clickBlog.addEventListener('click', checkWhatWasClicked);
