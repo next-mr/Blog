@@ -71,6 +71,7 @@ function createRightListAuthor() {
     ++objectAuthors[arrAllAuthors[i]];
   }
 
+
   for (const elementObjectAuthor in objectAuthors) {
     const dataRightListAuthor = templateRightListAuthor({
       dataObjectAuthor: elementObjectAuthor,
